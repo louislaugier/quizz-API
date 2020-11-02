@@ -5,10 +5,10 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq" // Postgres driver
+	_ "github.com/lib/pq" // Postgres
 )
 
-// DB returns a SQL database pointer
+// DB returns an SQL database pointer
 var DB = connect()
 
 func connect() *sql.DB {
