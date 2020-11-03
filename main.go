@@ -1,11 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+
 	"github.com/louislaugier/quizz-API/router"
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
-	router.Start().Run()
+	r := router.Init()
+	log.Fatal(http.ListenAndServe(":80", r))
 }

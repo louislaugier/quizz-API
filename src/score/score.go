@@ -1,9 +1,13 @@
 package score
 
 import (
-	"log"
+	"encoding/json"
+	"net/http"
+	"strconv"
 
-	"github.com/gin-gonic/gin"
+	"github.com/gorilla/mux"
+	"github.com/louislaugier/quizz-API/database"
+	response "github.com/louislaugier/quizz-API/src"
 )
 
 type score struct {
@@ -11,16 +15,29 @@ type score struct {
 	Score    int    `json:"score"`
 }
 
-// TopGET gets top scores
-func TopGET() func(c *gin.Context) {
-	return func(c *gin.Context) {
-		log.Println(c.Param("limit"))
+// GET scores with/without limit or get score for a username
+func GET(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	p, hasParam := mux.Vars(r)["param"]
+	param := ""
+	if hasParam {
+		_, err := strconv.Atoi(p)
+		if err != nil {
+			param = " where username = '" + p + "'"
+		} else {
+			param = " limit " + p
+		}
 	}
-}
-
-// GET score by username
-func GET() func(c *gin.Context) {
-	return func(c *gin.Context) {
-		log.Println(c.Param("username"))
+	rows, err := database.DB.Query("select username, score from scores" + param + ";")
+	defer rows.Close()
+	res := response.Response{
+		Error: err,
 	}
+	for rows.Next() {
+		s := score{}
+		rows.Scan(&s.Username, &s.Score)
+		res.Data = append(res.Data, &s)
+	}
+	json.NewEncoder(w).Encode(res)
 }
