@@ -10,6 +10,7 @@ import (
 func Init() *mux.Router {
 	r := mux.NewRouter()
 
+	r.HandleFunc("/api/scores", score.POST).Methods("POST")
 	r.HandleFunc("/api/scores", score.GET).Methods("GET")
 
 	// param can be :limit (number) or :username (string)

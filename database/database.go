@@ -7,7 +7,7 @@ import (
 	_ "github.com/lib/pq" // Postgres
 )
 
-// DB returns an SQL database pointer
+// DB export
 var DB = connect()
 
 func connect() *sql.DB {

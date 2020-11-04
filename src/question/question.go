@@ -16,8 +16,8 @@ type question struct {
 }
 
 type answer struct {
-	Answer    string `json:"answer"`
-	IsCorrect bool   `json:"isCorrect"`
+	Answer    *string `json:"answer"`
+	IsCorrect bool    `json:"isCorrect"`
 }
 
 // GET questions with/without limit or get a random question
@@ -39,7 +39,7 @@ func GET(w http.ResponseWriter, r *http.Request) {
 		Error: err,
 	}
 	for rows.Next() {
-		var a int
+		a := 0
 		q := question{
 			Answers: [4]*answer{{}, {}, {}, {}},
 		}

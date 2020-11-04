@@ -11,8 +11,18 @@ import (
 )
 
 type score struct {
-	Username string `json:"username"`
-	Score    int    `json:"score"`
+	Username *string `json:"username"`
+	Score    *int    `json:"score"`
+}
+
+// POST new score
+func POST(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	score := &score{}
+	json.NewDecoder(r.Body).Decode(&score)
+	txn, _ := database.DB.Begin()
+	txn.Exec("INSERT INTO scores (username, score) VALUES ($1, $2);", &score.Username, &score.Score)
+	txn.Commit()
 }
 
 // GET scores with/without limit or get score for a username

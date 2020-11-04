@@ -1,6 +1,6 @@
 package response
 
-// Response for API calls
+// Response export
 type Response struct {
 	Limit    string        `json:"limit,omitempty"`
 	Username string        `json:"username,omitempty"`
