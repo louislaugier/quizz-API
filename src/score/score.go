@@ -21,7 +21,7 @@ func POST(w http.ResponseWriter, r *http.Request) {
 	score := &score{}
 	json.NewDecoder(r.Body).Decode(&score)
 	txn, _ := database.DB.Begin()
-	txn.Exec("INSERT INTO scores (username, score) VALUES ($1, $2);", &score.Username, &score.Score)
+	txn.Exec("insert into scores (username, score) values ($1, $2);", &score.Username, &score.Score)
 	txn.Commit()
 }
 
