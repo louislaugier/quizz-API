@@ -47,7 +47,7 @@ func GET(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		s := score{}
 		rows.Scan(&s.Username, &s.Score)
-		res.Data = append(res.Data, &s)
+		res.Scores = append(res.Scores, &s)
 	}
 	json.NewEncoder(w).Encode(res)
 }

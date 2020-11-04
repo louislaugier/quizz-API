@@ -45,7 +45,7 @@ func GET(w http.ResponseWriter, r *http.Request) {
 		}
 		rows.Scan(&q.ID, &q.Question, &q.Answers[0].Answer, &q.Answers[1].Answer, &q.Answers[2].Answer, &q.Answers[3].Answer, &a)
 		q.Answers[a-1].IsCorrect = true
-		res.Data = append(res.Data, &q)
+		res.Questions = append(res.Questions, &q)
 	}
 	json.NewEncoder(w).Encode(res)
 }
