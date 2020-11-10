@@ -39,7 +39,7 @@ func GET(w http.ResponseWriter, r *http.Request) {
 			param = " limit " + p
 		}
 	}
-	rows, err := database.DB.Query("select username, score from scores" + param + ";")
+	rows, err := database.DB.Query("select username, score from scores" + param + " order by score desc;")
 	defer rows.Close()
 	res := response.Response{
 		Error: err,
