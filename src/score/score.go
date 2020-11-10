@@ -2,6 +2,7 @@ package score
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -34,12 +35,13 @@ func GET(w http.ResponseWriter, r *http.Request) {
 	if hasParam {
 		_, err := strconv.Atoi(p)
 		if err != nil {
-			param = " where username = '" + p + "'"
+			param = " where username = '" + p + "' order by score desc"
 		} else {
-			param = " limit " + p
+			param = " order by score desc limit " + p + ";"
 		}
 	}
-	rows, err := database.DB.Query("select username, score from scores" + param + " order by score desc;")
+	rows, err := database.DB.Query("select username, score from scores" + param)
+	log.Println(err)
 	defer rows.Close()
 	res := response.Response{
 		Error: err,
