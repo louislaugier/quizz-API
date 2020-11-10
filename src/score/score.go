@@ -2,7 +2,6 @@ package score
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -41,7 +40,6 @@ func GET(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	rows, err := database.DB.Query("select username, score from scores" + param)
-	log.Println(err)
 	defer rows.Close()
 	res := response.Response{
 		Error: err,
