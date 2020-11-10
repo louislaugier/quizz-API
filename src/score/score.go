@@ -34,7 +34,7 @@ func GET(w http.ResponseWriter, r *http.Request) {
 	if hasParam {
 		_, err := strconv.Atoi(p)
 		if err != nil {
-			param = " where username = '" + p + "' order by score desc"
+			param = " where username = '" + p + "' order by score desc;"
 		} else {
 			param = " order by score desc limit " + p + ";"
 		}
