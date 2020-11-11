@@ -14,7 +14,7 @@ func connect() *sql.DB {
 	// if err := godotenv.Load(); err != nil {
 	// 	panic(err)
 	// }
-	db, _ := sql.Open("postgres", "postgres://"+os.Getenv("DB_USER")+":"+os.Getenv("DB_PASS")+"@"+os.Getenv("DB_HOST")+":5432/"+os.Getenv("DB_NAME"))
+	db, _ := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	err := db.Ping()
 	if err != nil {
 		panic(err)
