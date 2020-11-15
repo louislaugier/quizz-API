@@ -42,6 +42,7 @@ func GET(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Request-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	p, hasParam := mux.Vars(r)["param"]
 	param := ""
 	if hasParam {
