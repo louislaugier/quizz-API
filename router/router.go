@@ -15,6 +15,7 @@ func Init() http.Handler {
 
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{"http://localhost:3000"},
+		AllowedMethods: []string{"GET", "POST"},
 	})
 
 	r.HandleFunc("/api/scores", score.POST).Methods("POST")
