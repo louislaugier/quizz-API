@@ -19,6 +19,8 @@ type score struct {
 func POST(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
 	s := &score{}
 	json.NewDecoder(r.Body).Decode(&s)
 	rows, _ := database.DB.Query("select count(*) from scores where username='" + *s.Username + "';")
