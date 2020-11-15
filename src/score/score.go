@@ -19,10 +19,22 @@ type score struct {
 func POST(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	score := &score{}
-	json.NewDecoder(r.Body).Decode(&score)
+	s := &score{}
+	json.NewDecoder(r.Body).Decode(&s)
+	rows, _ := database.DB.Query("select count(*) from scores where username='" + *s.Username + "';")
+	defer rows.Close()
+	var existingUser *int
+	for rows.Next() {
+		rows.Scan(&existingUser)
+	}
 	txn, _ := database.DB.Begin()
-	txn.Exec("insert into scores (username, score) values ($1, $2);", &score.Username, &score.Score)
+	if *existingUser == 1 {
+		txn.Exec("update scores set score = $1 where username = $2;", &s.Score, &s.Username)
+
+	} else {
+		txn.Exec("insert into scores (username, score) values ($1, $2);", &s.Username, &s.Score)
+
+	}
 	txn.Commit()
 }
 
