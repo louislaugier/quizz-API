@@ -30,7 +30,6 @@ func POST(w http.ResponseWriter, r *http.Request) {
 	txn, _ := database.DB.Begin()
 	if *existingUser == 1 {
 		txn.Exec("update scores set score = $1 where username = $2;", &s.Score, &s.Username)
-
 	} else {
 		txn.Exec("insert into scores (username, score) values ($1, $2);", &s.Username, &s.Score)
 
