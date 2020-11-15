@@ -34,7 +34,7 @@ func POST(w http.ResponseWriter, r *http.Request) {
 		txn.Exec("insert into scores (username, score) values ($1, $2);", &s.Username, &s.Score)
 	}
 	txn.Commit()
-	json.NewEncoder(w).Encode("OK")
+	json.NewEncoder(w).Encode(s)
 }
 
 // GET scores with/without limit or get score for a username
