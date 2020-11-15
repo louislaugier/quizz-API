@@ -32,9 +32,9 @@ func POST(w http.ResponseWriter, r *http.Request) {
 		txn.Exec("update scores set score = $1 where username = $2;", &s.Score, &s.Username)
 	} else {
 		txn.Exec("insert into scores (username, score) values ($1, $2);", &s.Username, &s.Score)
-
 	}
 	txn.Commit()
+	json.NewEncoder(w).Encode("OK")
 }
 
 // GET scores with/without limit or get score for a username
