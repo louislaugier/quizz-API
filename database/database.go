@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"os"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" // Postgres
 )
 
@@ -12,9 +11,9 @@ import (
 var DB = connect()
 
 func connect() *sql.DB {
-	if err := godotenv.Load(); err != nil {
-		panic(err)
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	panic(err)
+	// }
 	db, _ := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	err := db.Ping()
 	if err != nil {
